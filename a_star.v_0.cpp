@@ -114,7 +114,7 @@ void aStarSearch(int s_x, int s_y, int d_x, int d_y) {
             }
 
             colorVisitedCell(new_x, new_y);
-            delay(1);
+            //delay(1);
         }
 
         pq.pop();
@@ -170,6 +170,61 @@ void setObstacles() {
     OBSTACLES.push_back(make_pair(19, 15));
     OBSTACLES.push_back(make_pair(35, 11));
     OBSTACLES.push_back(make_pair(27, 29));
+
+    OBSTACLES.push_back(make_pair(25, 11));
+    OBSTACLES.push_back(make_pair(31, 29));
+    OBSTACLES.push_back(make_pair(27, 37));
+    OBSTACLES.push_back(make_pair(39, 45));
+    OBSTACLES.push_back(make_pair(21, 37));
+    OBSTACLES.push_back(make_pair(39, 25));
+    OBSTACLES.push_back(make_pair(25, 31));
+    OBSTACLES.push_back(make_pair(37, 49));
+
+    OBSTACLES.push_back(make_pair(6, 12));
+    OBSTACLES.push_back(make_pair(7, 13));
+    OBSTACLES.push_back(make_pair(8, 14));
+    OBSTACLES.push_back(make_pair(9, 15));
+    OBSTACLES.push_back(make_pair(10, 16));
+    OBSTACLES.push_back(make_pair(11, 17));
+    OBSTACLES.push_back(make_pair(12, 18));
+    OBSTACLES.push_back(make_pair(13, 19));
+    OBSTACLES.push_back(make_pair(14, 20));
+    OBSTACLES.push_back(make_pair(15, 21));
+    OBSTACLES.push_back(make_pair(16, 22));
+    OBSTACLES.push_back(make_pair(17, 23));
+    OBSTACLES.push_back(make_pair(18, 24));
+    OBSTACLES.push_back(make_pair(19, 25));
+    OBSTACLES.push_back(make_pair(20, 26));
+    OBSTACLES.push_back(make_pair(21, 27));
+    OBSTACLES.push_back(make_pair(22, 28));
+    OBSTACLES.push_back(make_pair(23, 29));
+    OBSTACLES.push_back(make_pair(24, 30));
+    OBSTACLES.push_back(make_pair(25, 31));
+    OBSTACLES.push_back(make_pair(26, 32));
+    OBSTACLES.push_back(make_pair(27, 33));
+
+    OBSTACLES.push_back(make_pair(22, 36));
+    OBSTACLES.push_back(make_pair(33, 37));
+    OBSTACLES.push_back(make_pair(44, 38));
+    OBSTACLES.push_back(make_pair(55, 29));
+    OBSTACLES.push_back(make_pair(46, 20));
+    OBSTACLES.push_back(make_pair(37, 21));
+    OBSTACLES.push_back(make_pair(28, 12));
+    OBSTACLES.push_back(make_pair(19, 13));
+    OBSTACLES.push_back(make_pair(0, 14));
+    OBSTACLES.push_back(make_pair(11, 25));
+    OBSTACLES.push_back(make_pair(22, 26));
+    OBSTACLES.push_back(make_pair(33, 27));
+    OBSTACLES.push_back(make_pair(44, 38));
+    OBSTACLES.push_back(make_pair(55, 39));
+    OBSTACLES.push_back(make_pair(46, 30));
+    OBSTACLES.push_back(make_pair(37, 21));
+    OBSTACLES.push_back(make_pair(28, 22));
+    OBSTACLES.push_back(make_pair(19, 23));
+    OBSTACLES.push_back(make_pair(30, 14));
+    OBSTACLES.push_back(make_pair(31, 15));
+    OBSTACLES.push_back(make_pair(32, 16));
+    OBSTACLES.push_back(make_pair(33, 7));
 }
 
 void setDirections() {
@@ -214,6 +269,7 @@ int main() {
 
     // draw the path
     drawPath();
+    initDestination(DESTINATION_X, DESTINATION_Y);
 
     getch();
     closegraph();
