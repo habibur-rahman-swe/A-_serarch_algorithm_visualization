@@ -45,13 +45,13 @@ void initSource(int X, int Y) {
 }
 
 void initDestination(int X, int Y) {
-    setfillstyle(SOLID_FILL, RED);
-    setcolor(RED);
+    setfillstyle(SOLID_FILL, BLUE);
+    setcolor(BLUE);
     // Draw the rectangle at position (15, 10)
     int posX = X * CELL_SIZE;
     int posY = Y * CELL_SIZE;
     rectangle(posX, posY, posX + CELL_SIZE, posY + CELL_SIZE);
-    floodfill(posX + 1, posY + 1, RED);
+    floodfill(posX + 1, posY + 1, BLUE);
     adj[Y][X].data = DESTINATION;
 }
 
