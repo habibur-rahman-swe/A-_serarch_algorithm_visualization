@@ -1,11 +1,13 @@
 #include <bits/stdc++.h>
 #include <graphics.h>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
 const int WIDTH = 620;
 const int HEIGHT = 460;
-const int CELL_SIZE = 10;
+const int CELL_SIZE = 5;
 const int SOURCE = 1;
 const int DESTINATION = 2;
 const int OBSTACLE = 0;
@@ -23,8 +25,8 @@ struct Cell{
 };
 
 struct ComparePairs {
-    bool operator()(const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) const {
-        return abs(lhs.first - DESTINATION_X) + abs(lhs.second - DESTINATION_Y) > abs(rhs.first - DESTINATION_X) + abs(rhs.second - DESTINATION_Y);
+    bool operator()(const pair<int, int>& lhs, const pair<int, int>& rhs) const {
+        return abs(lhs.first - DESTINATION_X) + abs(lhs.second - DESTINATION_Y) < abs(rhs.first - DESTINATION_X) + abs(rhs.second - DESTINATION_Y);
     }
 };
 
@@ -82,16 +84,17 @@ void colorVisitedCell(int X, int Y) {
 
 void aStarSearch(int s_x, int s_y, int d_x, int d_y) {
 
-    //priority_queue<pair<int, int>, vector<pair<int, int> >, ComparePairs> pq;
-    queue<pair<int, int> > pq;
+    priority_queue<pair<int, int>, vector<pair<int, int> >, ComparePairs> pq;
+    //queue<pair<int, int> > pq;
     bool flag = false;
 
     pq.push(make_pair(s_x, s_y));
     adj[s_y][s_x].visited = true;
 
     while (pq.size() > 0 && flag == false) {
-        pair<int, int> p = pq.front();
-        //pair<int, int> p = pq.top();
+        //pair<int, int> p = pq.front();
+        pair<int, int> p = pq.top();
+        pq.pop();
 
         for (int i = 0; i < directions.size(); i++) {
             int new_x = p.first + directions[i].first;
@@ -103,21 +106,18 @@ void aStarSearch(int s_x, int s_y, int d_x, int d_y) {
 
             adj[new_y][new_x].visited = true;
 
-            pq.push(make_pair(new_x, new_y));
-
             adj[new_y][new_x].px = p.first;
             adj[new_y][new_x].py = p.second;
+
+            pq.push(make_pair(new_x, new_y));
 
             if (new_x == DESTINATION_X && new_y == DESTINATION_Y) {
                 flag = true;
                 break;
             }
-
             colorVisitedCell(new_x, new_y);
             //delay(1);
         }
-
-        pq.pop();
     }
 
     cout << "PQ: " << pq.size() << "\n";
@@ -143,94 +143,34 @@ void drawPath() {
     }
 }
 
+int getRandomRow() {
+    // Generate a random number within a specific range (1 to 100)
+    int range_start = 1;
+    int range_end = ROW - 1;
+    int random_in_range = range_start + (rand() % (range_end - range_start + 1));
+
+    return random_in_range;
+}
+
+int getRandomCol() {
+    // Generate a random number within a specific range (1 to 100)
+    int range_start = 1;
+    int range_end = COL - 1;
+    int random_in_range = range_start + (rand() % (range_end - range_start));
+
+    return random_in_range;
+}
+
 void setObstacles() {
-    OBSTACLES.push_back(make_pair(0, 4));
-    OBSTACLES.push_back(make_pair(4, 4));
-    OBSTACLES.push_back(make_pair(3, 4));
-    OBSTACLES.push_back(make_pair(2, 4));
-    OBSTACLES.push_back(make_pair(1, 4));
-    OBSTACLES.push_back(make_pair(4, 3));
-    OBSTACLES.push_back(make_pair(4, 2));
-    OBSTACLES.push_back(make_pair(4, 1));
-    //OBSTACLES.push_back(make_pair(4, 0));
-    OBSTACLES.push_back(make_pair(5, 11));
-    OBSTACLES.push_back(make_pair(2, 19));
-    OBSTACLES.push_back(make_pair(5, 17));
-    OBSTACLES.push_back(make_pair(7, 13));
-    OBSTACLES.push_back(make_pair(12, 7));
-    OBSTACLES.push_back(make_pair(19, 11));
-    OBSTACLES.push_back(make_pair(3, 17));
-    OBSTACLES.push_back(make_pair(17, 17));
-
-    OBSTACLES.push_back(make_pair(15, 31));
-    OBSTACLES.push_back(make_pair(21, 29));
-    OBSTACLES.push_back(make_pair(17, 17));
-    OBSTACLES.push_back(make_pair(19, 25));
-    OBSTACLES.push_back(make_pair(31, 17));
-    OBSTACLES.push_back(make_pair(19, 15));
-    OBSTACLES.push_back(make_pair(35, 11));
-    OBSTACLES.push_back(make_pair(27, 29));
-
-    OBSTACLES.push_back(make_pair(25, 11));
-    OBSTACLES.push_back(make_pair(31, 29));
-    OBSTACLES.push_back(make_pair(27, 37));
-    OBSTACLES.push_back(make_pair(39, 45));
-    OBSTACLES.push_back(make_pair(21, 37));
-    OBSTACLES.push_back(make_pair(39, 25));
-    OBSTACLES.push_back(make_pair(25, 31));
-    OBSTACLES.push_back(make_pair(37, 49));
-
-    OBSTACLES.push_back(make_pair(6, 12));
-    OBSTACLES.push_back(make_pair(7, 13));
-    OBSTACLES.push_back(make_pair(8, 14));
-    OBSTACLES.push_back(make_pair(9, 15));
-    OBSTACLES.push_back(make_pair(10, 16));
-    OBSTACLES.push_back(make_pair(11, 17));
-    OBSTACLES.push_back(make_pair(12, 18));
-    OBSTACLES.push_back(make_pair(13, 19));
-    OBSTACLES.push_back(make_pair(14, 20));
-    OBSTACLES.push_back(make_pair(15, 21));
-    OBSTACLES.push_back(make_pair(16, 22));
-    OBSTACLES.push_back(make_pair(17, 23));
-    OBSTACLES.push_back(make_pair(18, 24));
-    OBSTACLES.push_back(make_pair(19, 25));
-    OBSTACLES.push_back(make_pair(20, 26));
-    OBSTACLES.push_back(make_pair(21, 27));
-    OBSTACLES.push_back(make_pair(22, 28));
-    OBSTACLES.push_back(make_pair(23, 29));
-    OBSTACLES.push_back(make_pair(24, 30));
-    OBSTACLES.push_back(make_pair(25, 31));
-    OBSTACLES.push_back(make_pair(26, 32));
-    OBSTACLES.push_back(make_pair(27, 33));
-
-    OBSTACLES.push_back(make_pair(22, 36));
-    OBSTACLES.push_back(make_pair(33, 37));
-    OBSTACLES.push_back(make_pair(44, 38));
-    OBSTACLES.push_back(make_pair(55, 29));
-    OBSTACLES.push_back(make_pair(46, 20));
-    OBSTACLES.push_back(make_pair(37, 21));
-    OBSTACLES.push_back(make_pair(28, 12));
-    OBSTACLES.push_back(make_pair(19, 13));
-    OBSTACLES.push_back(make_pair(0, 14));
-    OBSTACLES.push_back(make_pair(11, 25));
-    OBSTACLES.push_back(make_pair(22, 26));
-    OBSTACLES.push_back(make_pair(33, 27));
-    OBSTACLES.push_back(make_pair(44, 38));
-    OBSTACLES.push_back(make_pair(55, 39));
-    OBSTACLES.push_back(make_pair(46, 30));
-    OBSTACLES.push_back(make_pair(37, 21));
-    OBSTACLES.push_back(make_pair(28, 22));
-    OBSTACLES.push_back(make_pair(19, 23));
-    OBSTACLES.push_back(make_pair(30, 14));
-    OBSTACLES.push_back(make_pair(31, 15));
-    OBSTACLES.push_back(make_pair(32, 16));
-    OBSTACLES.push_back(make_pair(33, 7));
+    for (int i = 0; i < ROW * COL / 2; i++) {
+        OBSTACLES.push_back(make_pair(getRandomCol(), getRandomRow()));
+    }
 }
 
 void setDirections() {
     directions.push_back(make_pair(0, 1));
-    directions.push_back(make_pair(0, -1));
     directions.push_back(make_pair(1, 0));
+    directions.push_back(make_pair(0, -1));
     directions.push_back(make_pair(-1, 0));
 }
 
@@ -253,8 +193,8 @@ int main() {
     // delay(2000);
 
     // initializing destination
-    DESTINATION_X = 60;
-    DESTINATION_Y = 40;
+    DESTINATION_X = COL - 1;
+    DESTINATION_Y = ROW - 1;
     initDestination(DESTINATION_X, DESTINATION_Y);
 
     // initializing obstacles
@@ -270,7 +210,9 @@ int main() {
     // draw the path
     drawPath();
     initDestination(DESTINATION_X, DESTINATION_Y);
+    initSource(SOURCE_X, SOURCE_Y);
 
+    //delay(5000);
     getch();
     closegraph();
     return 0;
