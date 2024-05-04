@@ -5,6 +5,8 @@
 
 using namespace std;
 
+#define int long long
+
 const int WIDTH = 620;
 const int HEIGHT = 460;
 const int CELL_SIZE = 5;
@@ -26,7 +28,15 @@ struct Cell{
 
 struct ComparePairs {
     bool operator()(const pair<int, int>& lhs, const pair<int, int>& rhs) const {
-        return abs(lhs.first - DESTINATION_X) + abs(lhs.second - DESTINATION_Y) < abs(rhs.first - DESTINATION_X) + abs(rhs.second - DESTINATION_Y);
+        //return abs(lhs.first - DESTINATION_X) + abs(lhs.second - DESTINATION_Y) < abs(rhs.first - DESTINATION_X) + abs(rhs.second - DESTINATION_Y);
+
+        int sourceDistanceLHS = sqrt((lhs.first - SOURCE_X) * (lhs.first - SOURCE_X) + (lhs.second - SOURCE_Y) * (lhs.second - SOURCE_Y));
+        int destinationDistanceLHS = sqrt((lhs.first - DESTINATION_X) * (lhs.first - DESTINATION_X) + (lhs.second - DESTINATION_Y) * (lhs.second - DESTINATION_Y));
+
+        int sourceDistanceRHS = sqrt((rhs.first - SOURCE_X) * (rhs.first - SOURCE_X) + (rhs.second - SOURCE_Y) * (rhs.second - SOURCE_Y));
+        int destinationDistanceRHS = sqrt((rhs.first - DESTINATION_X) * (rhs.first - DESTINATION_X) + (rhs.second - DESTINATION_Y) * (rhs.second - DESTINATION_Y));
+
+        return sourceDistanceLHS + destinationDistanceLHS > sourceDistanceRHS + destinationDistanceRHS;
     }
 };
 
@@ -162,7 +172,10 @@ int getRandomCol() {
 }
 
 void setObstacles() {
-    for (int i = 0; i < ROW * COL / 2; i++) {
+    //OBSTACLES.push_back(make_pair(COL - 2, ROW - 2));
+    //OBSTACLES.push_back(make_pair(COL - 2 + 1, ROW - 2));
+    //OBSTACLES.push_back(make_pair(COL - 2, ROW - 2 + 1));
+    for (int i = 0; i < ROW * COL / 10; i++) {
         OBSTACLES.push_back(make_pair(getRandomCol(), getRandomRow()));
     }
 }
@@ -174,8 +187,8 @@ void setDirections() {
     directions.push_back(make_pair(-1, 0));
 }
 
-int main() {
-    int gd = DETECT, gm;
+int32_t main() {
+    int32_t gd = DETECT, gm;
     initgraph(&gd, &gm, "");
 
     for (int i = 0; i < WIDTH; i += CELL_SIZE) {
@@ -187,7 +200,7 @@ int main() {
 
     // initializing source
     SOURCE_X = 0;
-    SOURCE_X = 0;
+    SOURCE_Y = 0;
     initSource(SOURCE_X, SOURCE_Y);
 
     // delay(2000);
